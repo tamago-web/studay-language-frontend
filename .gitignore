@@ -1,0 +1,13 @@
+# .gitignore
+
+# Node.js dependencies
+node_modules/
+
+# Next.js build output
+.next/
+
+# Environment variables
+.env
+
+# Logs
+*.log
