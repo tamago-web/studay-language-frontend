@@ -6,10 +6,11 @@ import { useParams, useRouter } from 'next/navigation'
 export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const router = useRouter()
     const params = useParams()
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
 
-    const { data: user, error, mutate } = useSWR('${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user', () =>
+    const { data: user, error, mutate } = useSWR(backendUrl + '/api/user', () =>
         axios
-            .get('/api/user')
+            .get(backendUrl + '/api/user')
             .then(res => res.data)
             .catch(error => {
                 if (error.response.status !== 409) throw error
@@ -18,7 +19,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             }),
     )
 
-    const csrf = () => axios.get('${process.env.NEXT_PUBLIC_BACKEND_URL}/sanctum/csrf-cookie')
+    const csrf = () => axios.get(backendUrl + '/sanctum/csrf-cookie')
 
     const register = async ({ setErrors, ...props }) => {
         await csrf()
