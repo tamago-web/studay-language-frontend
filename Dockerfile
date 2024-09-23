@@ -1,18 +1,17 @@
-# Use the official Node.js image as a parent image
-FROM node:18
+# ベースイメージの設定
+FROM node:18-alpine
 
-# Set the working directory
+# 作業ディレクトリの設定
 WORKDIR /app
 
-# Install dependencies
-COPY package.json package-lock.json ./
+# 依存関係をインストールするためにpackage.jsonとpackage-lock.jsonをコピー
+COPY package*.json ./
+
+# npmの依存パッケージをインストール
 RUN npm install
 
-# Copy the rest of the application
+# 残りのプロジェクトファイルをコピー
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
-
-# Start the application
+# 開発サーバーを起動
 CMD ["npm", "run", "dev"]
